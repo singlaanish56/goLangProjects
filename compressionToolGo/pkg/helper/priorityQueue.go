@@ -1,7 +1,8 @@
 package helper
 
-import(
+import (
 	"container/heap"
+	"fmt"
 )
 type Item struct{
 	value HuffmanNode
@@ -9,6 +10,12 @@ type Item struct{
 	index int
 }
 
+func (item *Item)Value() HuffmanNode{
+	return item.value	
+}
+func InitItem(v HuffmanNode, p int, i int) *Item{
+	return &Item{value: v, priority: p, index: i}
+}
 type PriorityQueue []*Item
 
 func (pq PriorityQueue) Len() int { return len(pq)}
@@ -45,4 +52,8 @@ func (pq *PriorityQueue) Update(item *Item, value HuffmanNode, priority int){
 	item.value = value
 	item.priority = priority
 	heap.Fix(pq,item.index)
+}
+
+func PrintPriorityQueueItem(item Item){
+	fmt.Printf("%s:%d %d\n",string(item.value.(*HuffmanLeafNode).Element()), item.value.Weight(), item.priority)
 }

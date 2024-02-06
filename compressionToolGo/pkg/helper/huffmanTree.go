@@ -10,6 +10,10 @@ type HuffmanLeafNode struct {
 	weight  int
 }
 
+func InitLeafNode(r rune, w int) *HuffmanLeafNode{
+	return &HuffmanLeafNode{element: r, weight: w}
+}
+
 func (ln *HuffmanLeafNode) Leaf() bool {
 	return true
 }
@@ -28,6 +32,9 @@ type HuffmanInternalNode struct {
 	right  HuffmanNode
 }
 
+func InitInternalNode(w int, l HuffmanNode, r HuffmanNode ) *HuffmanInternalNode{
+	return &HuffmanInternalNode{weight: w, left: l, right: r}
+}
 func (ln *HuffmanInternalNode) Leaf() bool {
 	return false
 }
