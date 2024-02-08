@@ -5,22 +5,27 @@ import (
 	"github.com/singlaanish56/compressionToolGo/pkg/algo"
 )
 
-var fileName string
+var inputFileName string
+var ouputFileName string
 func InitFlags(){
 	const (
-		defaultFile=""
+		defaultInputFile=""
 		shorthand = "(shorthand)"
-		usage = "Enter the file name to be compressed"
+		inputFileusage = "Enter the file name to be compressed"
+		outputFileusage = "Enter the file name for the output"
+		defaultOutputFile = "result.txt"
 	)	
 
-	flag.StringVar(&fileName,"file",defaultFile,usage)
-	flag.StringVar(&fileName,"f",defaultFile,shorthand+usage)
+	flag.StringVar(&inputFileName,"input",defaultInputFile,inputFileusage)
+	flag.StringVar(&inputFileName,"f",defaultInputFile,shorthand+inputFileusage)
+	flag.StringVar(&ouputFileName,"output",defaultOutputFile,outputFileusage)
+	flag.StringVar(&ouputFileName,"o",defaultOutputFile,shorthand+outputFileusage)
 }
 
 func ParseTheFlags(){
 	flag.Parse()
 
-	if len(fileName) > 0 {
-		algo.Compress(fileName)
+	if len(inputFileName) > 0 {
+		algo.Compress(inputFileName, ouputFileName)
 	}
 }

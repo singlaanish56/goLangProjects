@@ -8,7 +8,7 @@ import (
 )
 
 var store []byte
-func Compress(filename string) {
+func Compress(filename string, output string) {
 
 	f, err := os.Open(filename)
 	errors.HandleError(err)
@@ -26,5 +26,5 @@ func Compress(filename string) {
 		store = append(store, line...)
 	}
 
-	HuffmanCompress(store)
+	HuffmanCompress(store, output)
 }

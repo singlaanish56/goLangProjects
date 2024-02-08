@@ -30,6 +30,8 @@ type HuffmanInternalNode struct {
 	weight int
 	left   HuffmanNode
 	right  HuffmanNode
+	leftEdge int
+	rightEdge int
 }
 
 func InitInternalNode(w int, l HuffmanNode, r HuffmanNode ) *HuffmanInternalNode{
@@ -49,4 +51,20 @@ func (ln *HuffmanInternalNode) Left() HuffmanNode {
 
 func (ln *HuffmanInternalNode) Right() HuffmanNode {
 	return ln.right
+}
+
+func (ln * HuffmanInternalNode) LeftEdge() int{
+	return ln.leftEdge
+}
+
+func (ln * HuffmanInternalNode) RightEdge() int{
+	return ln.rightEdge
+}
+
+func (ln * HuffmanInternalNode) SetLeftEdge(val int){
+	ln.leftEdge = val
+}
+
+func (ln * HuffmanInternalNode) SetRightEdge(val int){
+	ln.rightEdge = val
 }

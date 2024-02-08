@@ -2,12 +2,19 @@ package algo
 
 import (
 	"container/heap"
+	"os"
+	"strconv"
+	"sync"
+
 	//"fmt"
 
+	"github.com/singlaanish56/compressionToolGo/pkg/errors"
 	"github.com/singlaanish56/compressionToolGo/pkg/helper"
 )
 
-func HuffmanCompress(lines []byte) {
+var fileMutex sync.RWMutex
+
+func HuffmanCompress(lines []byte, output string) {
 
 	freqMap := CalculateTheFrequency(lines)
 
@@ -32,8 +39,38 @@ func HuffmanCompress(lines []byte) {
 
 		combinedWeight := item1.Value().Weight() + item1.Value().Weight()
 		internalNode := helper.InitInternalNode(combinedWeight, item1.Value(), item2.Value())
+		internalNode.SetLeftEdge(0)
+		internalNode.SetRightEdge(1)
 		heap.Push(&pq, helper.InitItem(internalNode, combinedWeight, 0))
 	}
 
-	//assign the codes to the tree, left node gets a 0 and right node gets a 1
+	//var prefixMap map[rune]int
+
+
+
+
+	// output filename
+	// add the header which includes the character frequency map
+	f, err := os.OpenFile(output, os.O_CREATE | os.O_WRONLY | os.O_APPEND, 0644)
+	errors.HandleError(err)
+
+	defer f.Close()
+
+	fileMutex.Lock()
+	defer fileMutex.Unlock()
+	_, e1 := f.WriteString("------------------header start---------------------\n")
+	errors.HandleError(e1)
+
+	linesAdded := 3
+
+	for k, v := range freqMap{
+		s := string(k) + " : " + strconv.Itoa(v) + "\n"
+		_, e := f.WriteString(s)
+		errors.HandleError(e)
+		linesAdded++
+	}
+
+	_, e2 := f.WriteString("------------------header end---------------------\n")
+	errors.HandleError(e2)
+
 }
