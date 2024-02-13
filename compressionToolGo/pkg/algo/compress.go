@@ -16,7 +16,6 @@ func Compress(filename string, output string) {
 	defer f.Close()
 
 	reader := bufio.NewReader(f)
-
 	for{
 		line, _, err := reader.ReadLine()
 		if errors.HandleFileError(err){
@@ -24,6 +23,7 @@ func Compress(filename string, output string) {
 		}
 
 		store = append(store, line...)
+		store = append(store, '\n')
 	}
 
 	HuffmanCompress(store, output)
